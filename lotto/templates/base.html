@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+  <body>
+    <p>
+      <a href="/">홈</a> |
+      {% if user.is_authenticated %}
+        <a href="/my/tickets/">내 티켓</a> | <a href="/accounts/logout/">로그아웃</a>
+      {% else %}
+        <a href="/accounts/login/">로그인</a>
+      {% endif %}
+    </p>
+    <hr>
+    {% block content %}{% endblock %}
+  </body>
+</html>

@@ -1,19 +1,25 @@
-<h2>로또 홈</h2>
-{% if user.is_authenticated %}
-  <p><a href="/my/tickets/">내 티켓 보기</a></p>
-{% else %}
-  <p><a href="/admin/login/">로그인</a> 후 구매 가능</p>
-{% endif %}
-<ul>
-  {% for d in draws %}
-    <li>
-      {{ d.number }}회 ({{ d.draw_date }}) - {{ d.status }}
-      {% if user.is_authenticated and d.status == "SCHEDULED" %}
-        | <a href="/buy/{{ d.number }}/auto/">자동구매</a>
-        | <a href="/buy/{{ d.number }}/manual/">수동구매</a>
-      {% endif %}
-    </li>
-  {% empty %}
-    <li>등록된 회차가 없습니다.</li>
-  {% endfor %}
-</ul>
+{% extends "base.html" %}
+{% block content %}
+  <h2>로또 홈</h2>
+  {% if user.is_authenticated %}
+    <p><a href="/my/tickets/">내 티켓 보기</a></p>
+  {% else %}
+    <p><a href="/admin/login/">로그인</a> 후 구매 가능</p>
+  {% endif %}
+  <ul>
+    {% for d in draws %}
+      <li>
+        {{ d.number }}회 ({{ d.draw_date }}) - {{ d.status }}
+        {% if user.is_authenticated and d.status == "SCHEDULED" %}
+          | <a href="/buy/{{ d.number }}/auto/">자동구매</a>
+          | <a href="/buy/{{ d.number }}/manual/">수동구매</a>
+        {% endif %}
+        {% if d.status == "DONE" %}
+          | <a href="/draw/{{ d.number }}/result/">결과</a>
+        {% endif %}
+      </li>
+    {% empty %}
+      <li>등록된 회차가 없습니다.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
