@@ -10,7 +10,7 @@ def index(request):
 
 def my_tickets(request):
     if not request.user.is_authenticated:
-        return redirect("/admin/login/?next=/my/tickets/")  # 임시: admin 로그인 재활용
+        return redirect("/accounts/login/?next=/my/tickets/") 
     tickets = Ticket.objects.filter(user=request.user).select_related("draw")
     return render(request, "lotto/my_tickets.html", {"tickets": tickets})
 
